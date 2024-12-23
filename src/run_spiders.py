@@ -10,9 +10,10 @@ class RunSpiders:
         
     def run_spider_mercadolivre(self):
         print("Iniciando scraping do Mercado Livre...")
-        subprocess.run(["scrapy", "crawl", "mercadolivre_spider"])
+        subprocess.run(["scrapy", "crawl", "mercado_livre_spider"])
 
 
 if __name__ == "__main__":
     run_spiders = RunSpiders()
     run_spiders.run_spider_amazon()
+    run_spiders.run_spider_mercadolivre()

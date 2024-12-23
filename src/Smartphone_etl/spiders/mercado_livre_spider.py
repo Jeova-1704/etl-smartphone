@@ -20,4 +20,28 @@ class MercadoLivreSpiderSpider(scrapy.Spider):
     }
 
     def parse(self, response):
-        pass
+        products = response.css('div.poly-card__content')
+        
+        for product in products:
+            product_name = product.css('h2.poly-box.poly-component__title a::text').get()
+            prices = product.css('span.andes-money-amount__fraction::text').getall()
+            cents = product.css('span.andes-money-amount__cents::text').getall()
+            available = product.css('span.poly-reviews__rating::text').get()
+            
+            price_whole = None
+            if prices and cents:
+                price_whole = f"R$ {prices[0]},{cents[0]}"
+            
+                
+            yield {
+                'product_name': product_name,
+                'price_whole': price_whole,
+                'available': available
+            }
+        
+        if self.page_count < self.max_page_count:
+            next_page = response.css('li.andes-pagination__button--next a::attr(href)').get()
+            if next_page:
+                self.page_count += 1
+                print("Next page URL:", next_page)
+                yield scrapy.Request(url=next_page, callback=self.parse)
