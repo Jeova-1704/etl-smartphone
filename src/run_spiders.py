@@ -7,15 +7,17 @@ class RunSpiders:
     def run_spider_amazon(self):
         print("Iniciando scraping da Amazon...")
         subprocess.run(["scrapy", "crawl", "amazon_spider"])
+        print("Scraping dos dados finalizado")
         
     def run_spider_mercadolivre(self):
         print("Iniciando scraping do Mercado Livre...")
         subprocess.run(["scrapy", "crawl", "mercado_livre_spider"])
+        print("Scraping dos dados finalizado")
         
     def run_spider_magazineluiza(self):
         print("Iniciando scraping da Magazine Luiza...")
         subprocess.run(["scrapy", "crawl", "magazine_luiza_spider"])
-
+        print("Scraping dos dados finalizado")
 
 if __name__ == "__main__":
     run_spiders = RunSpiders()

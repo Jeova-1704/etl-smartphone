@@ -3,9 +3,9 @@ import re
 import os
 import sqlite3
 
-class MagazineLuizaProcessing:
+class AmazonProcessing:
     def __init__(self):
-        self.data = pd.read_json('../../raw_data/magazine_luiza_products.json')
+        self.data = pd.read_json('../../raw_data/amazon_products.json')
         
     def process(self):
         self.extract_specifications()
@@ -50,29 +50,30 @@ class MagazineLuizaProcessing:
     def drop_columns(self):
         self.data.drop(columns=['product_name'], inplace=True)
         self.data = self.data[self.data['model'] != "Não identificado"]
-    
+        
     def format_price(self):
         if self.data['price_whole'].isnull().any():
             self.data['price_whole'] = self.data['price_whole'].fillna('0')
         
         self.data['price_whole'] = (
         self.data['price_whole']
-        .str.replace('BRL', '', regex=True)
+        .str.replace('R\$', '', regex=True)
         .str.replace(' ', '', regex=False)
+        .str.replace('.', '', regex=False)
+        .str.replace(',', '.', regex=False)
         .astype(float))
-
     
     def save(self):
         output_dir = '../../processed_data'
         if not os.path.exists(output_dir):
             os.makedirs(output_dir)
         
-        con = sqlite3.connect(f'{output_dir}/magazine_luiza.db')
+        con = sqlite3.connect(f'{output_dir}/amazon.db')
         self.data.to_sql('products', con, if_exists='replace', index=False)
         con.close()
     
 if __name__ == "__main__":
-    magazine_luiza_processing = MagazineLuizaProcessing()
-    magazine_luiza_processing.process()
+    amazon_processing = AmazonProcessing()
+    amazon_processing.process()
 
             

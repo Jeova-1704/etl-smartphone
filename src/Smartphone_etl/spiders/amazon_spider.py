@@ -31,17 +31,21 @@ class AmazonSpiderSpider(scrapy.Spider):
             product_name = product.css("h2.a-size-base-plus span::text").get()
             price_whole = product.css('span.a-price-whole::text').get()
             price_fraction = product.css('span.a-price-fraction::text').get()
-            rating_value = product.css('span.a-size-small.a-color-base::text').get()
-
+            rating_value = product.css('span.a-icon-alt::text').get()
+            
             # Formatar o preço
             if price_whole and price_fraction:
                 price = f"R$ {price_whole},{price_fraction}"
             else:
                 price = None
 
+            if rating_value:
+                rating_value = rating_value.split(" ")[0]
+                
+                
             yield {
                 "product_name": product_name,
-                "product_price": price,
+                "price_whole": price,
                 "rating_value": rating_value
             }
 

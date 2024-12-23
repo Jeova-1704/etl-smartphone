@@ -12,6 +12,7 @@ class MercadoLivreProcessing:
         self.extract_specifications()
         self.fill_missing_values()
         self.drop_columns()
+        self.format_price()
         self.order_columns()
         self.save()
         
@@ -45,9 +46,25 @@ class MercadoLivreProcessing:
         self.data['ram'] = self.data['ram'].fillna(8)
         self.data['storage'] = self.data['storage'].fillna(128)
         self.data['model'] = self.data['model'].fillna("Não identificado")
+        self.data['rating_value'] = self.data['rating_value'].fillna(4)
+
         
     def drop_columns(self):
         self.data.drop(columns=['product_name'], inplace=True)
+        self.data = self.data[self.data['model'] != "Não identificado"]
+        
+    def format_price(self):
+        if self.data['price_whole'].isnull().any():
+            self.data['price_whole'] = self.data['price_whole'].fillna('0')
+        
+        self.data['price_whole'] = (
+        self.data['price_whole']
+        .str.replace('R\$', '', regex=True)
+        .str.replace(' ', '', regex=False)
+        .str.replace('.', '', regex=False)
+        .str.replace(',', '.', regex=False)
+        .astype(float))
+        
         
     def save(self):
         output_dir = '../../processed_data'
