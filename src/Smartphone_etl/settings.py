@@ -21,18 +21,6 @@ NEWSPIDER_MODULE = "Smartphone_etl.spiders"
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False
 
-FEEDS = {
-    '../data/amazon_products.json': {
-        'format': 'json',
-        'encoding': 'utf8',
-    },
-    '../data/mercadolivre_products.json': {
-        'format': 'json',
-        'encoding': 'utf8',
-    },
-}
-
-
 OFFSITE_MIDDLEWARES = {
     'scrapy.downloadermiddlewares.offsite.OffsiteMiddleware': None,
 }
