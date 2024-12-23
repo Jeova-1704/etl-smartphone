@@ -26,7 +26,7 @@ class MercadoLivreSpiderSpider(scrapy.Spider):
             product_name = product.css('h2.poly-box.poly-component__title a::text').get()
             prices = product.css('span.andes-money-amount__fraction::text').getall()
             cents = product.css('span.andes-money-amount__cents::text').getall()
-            available = product.css('span.poly-reviews__rating::text').get()
+            rating_value = product.css('span.poly-reviews__rating::text').get()
             
             price_whole = None
             if prices and cents:
@@ -36,7 +36,7 @@ class MercadoLivreSpiderSpider(scrapy.Spider):
             yield {
                 'product_name': product_name,
                 'price_whole': price_whole,
-                'available': available
+                'rating_value': rating_value
             }
         
         if self.page_count < self.max_page_count:
