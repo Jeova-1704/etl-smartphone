@@ -15,12 +15,23 @@ BOT_NAME = "amazon_etl"
 SPIDER_MODULES = ["amazon_etl.spiders"]
 NEWSPIDER_MODULE = "amazon_etl.spiders"
 
-
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = "amazon_etl (+http://www.yourdomain.com)"
 
 # Obey robots.txt rules
-ROBOTSTXT_OBEY = True
+ROBOTSTXT_OBEY = False
+
+FEEDS = {
+    '../data/output.json': {
+        'format': 'json',
+        'encoding': 'utf8',
+    },
+    # ou, se preferir CSV:
+    # 'output.csv': {
+    #     'format': 'csv',
+    #     'encoding': 'utf8',
+    # }
+}
 
 
 OFFSITE_MIDDLEWARES = {
