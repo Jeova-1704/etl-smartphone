@@ -11,7 +11,7 @@ class AmazonSpiderSpider(scrapy.Spider):
     
     custom_settings = {
         'FEEDS': {
-            '../data/amazon_products.json': {
+            '../raw_data/amazon_products.json': {
                 'format': 'json',
                 'encoding': 'utf8',
             },

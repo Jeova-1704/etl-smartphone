@@ -13,7 +13,7 @@ class MagazineLuizaSpider(scrapy.Spider):
 
     custom_settings = {
         'FEEDS': {
-            '../data/magazine_luiza_products.json': {
+            '../raw_data/magazine_luiza_products.json': {
                 'format': 'json',
                 'encoding': 'utf8',
             }

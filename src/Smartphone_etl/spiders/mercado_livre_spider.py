@@ -12,7 +12,7 @@ class MercadoLivreSpiderSpider(scrapy.Spider):
     
     custom_settings = {
         'FEEDS': {
-            '../data/mercadolivre_products.json': {
+            '../raw_data/mercadolivre_products.json': {
                 'format': 'json',
                 'encoding': 'utf8',
             }

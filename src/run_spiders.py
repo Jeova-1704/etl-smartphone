@@ -19,6 +19,6 @@ class RunSpiders:
 
 if __name__ == "__main__":
     run_spiders = RunSpiders()
-    # run_spiders.run_spider_amazon()
-    # run_spiders.run_spider_mercadolivre()
+    run_spiders.run_spider_amazon()
+    run_spiders.run_spider_mercadolivre()
     run_spiders.run_spider_magazineluiza()
