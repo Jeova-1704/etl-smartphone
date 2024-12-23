@@ -8,6 +8,12 @@ class RunProcess:
         print("Iniciando processamento dos dados do Mercado Livre...")
         subprocess.run(["python", "mercado_livre_processing.py"])
         
+    def run_process_magazine_luiza(self):
+        print("Iniciando processamento dos dados da magazine luiza...")
+        subprocess.run(["python", "magazine_luiza_processing.py"])
+        
+
 if __name__ == "__main__":
     run_process = RunProcess()
     run_process.run_process_mercadolivre()
+    run_process.run_process_magazine_luiza()
