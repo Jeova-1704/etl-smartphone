@@ -18,9 +18,18 @@ class RunProcess:
         print("Iniciando processamento dos dados da amazon...")
         subprocess.run(["python", "amazon_processing.py"])
         print("Processamento dos dados finalizado")
+        
+    def run_process_formated_db(self):
+        print("Iniciando processamento dos dados formatados...")
+        subprocess.run(["python", "formated_db.py"])
+        print("Processamento dos dados finalizado")
+        
+    def run_process(self):
+        self.run_process_mercadolivre()
+        self.run_process_magazine_luiza()
+        self.run_process_amazon()
+        self.run_process_formated_db()
 
 if __name__ == "__main__":
     run_process = RunProcess()
-    run_process.run_process_mercadolivre()
-    run_process.run_process_magazine_luiza()
-    run_process.run_process_amazon()
+    run_process.run_process()   
