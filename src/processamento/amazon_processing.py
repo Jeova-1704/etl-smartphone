@@ -12,11 +12,15 @@ class AmazonProcessing:
         self.fill_missing_values()
         self.drop_columns()
         self.format_price()
+        self.add_origin_data()
         self.order_columns()
         self.save()
     
     def order_columns(self):
-        self.data = self.data[['model', 'storage', 'ram', 'is_5g', 'price_whole', 'rating_value']]
+        self.data = self.data[['model', 'storage', 'ram', 'is_5g', 'price_whole', 'rating_value', 'origin']]
+        
+    def add_origin_data(self):
+        self.data['origin'] = 'Amazon'
     
     def extract_specifications(self):
         

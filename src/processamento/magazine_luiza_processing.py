@@ -12,11 +12,15 @@ class MagazineLuizaProcessing:
         self.fill_missing_values()
         self.drop_columns()
         self.format_price()
+        self.origin_data()
         self.order_columns()
         self.save()
     
     def order_columns(self):
-        self.data = self.data[['model', 'storage', 'ram', 'is_5g', 'price_whole', 'rating_value']]
+        self.data = self.data[['model', 'storage', 'ram', 'is_5g', 'price_whole', 'rating_value', 'origin']]
+        
+    def origin_data(self):
+        self.data['origin'] = 'Magazine Luiza'
     
     def extract_specifications(self):
         
