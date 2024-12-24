@@ -16,11 +16,16 @@ class FormatedDB:
         self.handle_price_zero()
         self.fix_storage_errors()
         self.handle_storage_zero()
+        self.fix_rating()
         self.save()
         
     def join_data(self):
         self.data = pd.concat([self.amazon_data, self.magazine_luiza_data, self.mercado_livre_data])
         self.data.reset_index(drop=True, inplace=True)
+        
+    def fix_rating(self):
+        self.data['rating_value'] = self.data['rating_value'].replace(',', '.', regex=True)
+        self.data['rating_value'] = self.data['rating_value'].astype(float)
         
     def handle_price_zero(self):
         products_with_zero_price = self.data[self.data['price_whole'] == 0]
@@ -64,6 +69,7 @@ class FormatedDB:
         con = sqlite3.connect(f'{output_dir}/database.db')
         self.data.to_sql('products', con, if_exists='replace', index=False)
         con.close()
+        self.data.to_json(f'{output_dir}/database.json', orient='records', lines=True)
         
 
 if __name__ == "__main__":
