@@ -68,9 +68,7 @@ class FormatedDB:
         
         con = sqlite3.connect(f'{output_dir}/database.db')
         self.data.to_sql('products', con, if_exists='replace', index=False)
-        con.close()
-        self.data.to_json(f'{output_dir}/database.json', orient='records', lines=True)
-        
+        con.close()        
 
 if __name__ == "__main__":
     formated_db = FormatedDB()
