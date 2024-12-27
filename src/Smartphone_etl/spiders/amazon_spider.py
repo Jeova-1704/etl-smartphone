@@ -14,6 +14,7 @@ class AmazonSpiderSpider(scrapy.Spider):
             '../raw_data/amazon_products.json': {
                 'format': 'json',
                 'encoding': 'utf8',
+                'overwrite': True,
             },
         },
     }

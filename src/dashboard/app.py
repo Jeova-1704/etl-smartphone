@@ -2,7 +2,6 @@ import streamlit as st
 import pandas as pd
 import sqlite3
 
-
 class Dashboard:
     def __init__(self):
         self.data = pd.read_sql_query("SELECT * FROM products", sqlite3.connect("../../processed_data/database.db"))
@@ -97,9 +96,10 @@ class Dashboard:
         )
         st.subheader("Tabela com dados do modelo selecionado ", model)
         st.write(data)
-        
+    
     def run(self):
-        st.image("https://www.databricks.com/sites/default/files/inline-images/etl-process-image.png", caption="Imagem temporaria, enquando não é feito o processo do meu sistema", use_container_width=True)
+            
+        st.image("../../arquitetura-projeto-etl.png", caption="Arquitetura do projeto", use_container_width=True)
         st.title("Dashboard smartphones")
         st.subheader("Dashboard do resultado do etl de smartphones nas principais lojas online como Amazon, magazine luiza e mercado livre")
         self.analise_all()

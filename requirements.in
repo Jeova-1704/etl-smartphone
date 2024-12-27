@@ -2,3 +2,7 @@ python-dotenv
 Scrapy
 streamlit
 pandas
+apscheduler
+pyngrok 
+supabase
+fastapi[standard]

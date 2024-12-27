@@ -15,6 +15,7 @@ class MercadoLivreSpiderSpider(scrapy.Spider):
             '../raw_data/mercadolivre_products.json': {
                 'format': 'json',
                 'encoding': 'utf8',
+                'overwrite': True,
             }
         }
     }

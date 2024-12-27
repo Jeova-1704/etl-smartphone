@@ -1,6 +1,9 @@
 # Projeto de Engenharia de Dados - Pipeline de Coleta e Processamento
 Este projeto é um pipeline de engenharia de dados desenvolvido para coletar, processar e analisar dados de smartphones disponíveis em e-commerces como Amazon, Mercado Livre, e Magazine Luiza. O pipeline inclui uma etapa de coleta de dados usando Scrapy, processamento e armazenamento em um banco de dados, e visualização interativa com Streamlit.
 
+<!-- Add uma imagem abaixo -->
+![Imagem](.\arquitetura-projeto-etl.png)
+
 ## Índice
 1. [Visão Geral](#visão-geral)
 2. [Estrutura do Projeto](#estrutura-do-projeto)
@@ -11,59 +14,20 @@ Este projeto é um pipeline de engenharia de dados desenvolvido para coletar, pr
 
 
 ## Visão Geral
-O objetivo deste projeto é criar uma solução escalável para coletar dados de preços, avaliações e especificações técnicas de smartphones, processá-los para insights e fornecer uma interface interativa para análise. Os principais componentes são:
+O objetivo deste projeto é criar uma solução escalável para coletar dados de preços, avaliações e especificações técnicas de smartphones, processá-los para insights e fornecer uma interface interativa e API para análise de dados.
 
 - Coleta de dados: Utilizando Scrapy para realizar scraping de sites como Amazon, Mercado Livre e Magazine Luiza.
 - Processamento de dados: Transformação dos dados brutos em um formato estruturado e limpo.
-- Armazenamento: Banco de dados SQLite para armazenar tanto os dados brutos quanto os processados.
+- Armazenamento: Banco de dados postgreSQL no Supabase.
 - Visualização: Dashboard interativo em Streamlit.
+- API: Fornecer uma API para acessar os dados processados.
+- Ngrok: Utilizado para disponibilizar a API para acesso externo.
 
-## Estrutura do Projeto
-A estrutura do projeto foi organizada em diretórios para separar responsabilidades. Veja abaixo a hierarquia principal:
-```bash 
-├── .venv/                    
-├── processed_data/           
-│   ├── amazon.db          
-│   ├── database.db
-│   ├── magazine_luiza.db
-│   ├── mercado_livre.db
-├── raw_data/
-│   ├── amazon_products.json
-│   ├── magazine_luiza_products.json
-│   ├── mercadolivre_products.json
-├── src/
-│   ├── dashboard/
-│   │   ├── app.py
-│   ├── processamento/
-│   │   ├── amazon_processing.py
-│   │   ├── formated_db.py
-│   │   ├── magazine_luiza_processing.py
-│   │   ├── main.py
-│   │   ├── mercado_livre_processing.py
-│   ├── Smartphones_etl/
-│   │   ├── spiders/
-│   │   │   ├── __init__.py
-│   │   │   ├── amazon_spider.py
-│   │   │   ├── magazine_luiza_spider.py
-│   │   │   ├── mercado_livre_spider.py
-│   │   ├── __init__.py
-│   │   ├── items.py
-│   │   ├── middlewares.py
-│   │   ├── settings.py
-│   ├── run_spiders.py
-│   ├── scrapy.cfg
-├── .env
-├── .env.example
-├── .gitignore
-├── README.md
-├── requirements-dev.txt
-├── requirements.in
-├── requirements.txt
-```
 ### Componentes principais:
 - scraper/: Contém spiders para coletar dados de diferentes fontes de e-commerce.
 - processamento/: Responsável pela transformação e limpeza dos dados brutos.
 - dashboard/: Aplicação para análise interativa dos dados processados.
+- api/: API para acessar os dados processados.
 
 ## Funcionamento do Scrapy e Coleta de Dados
 ### O que é Scrapy?
@@ -116,36 +80,53 @@ No diretório raiz do projeto, renomeie o arquivo .env.example para .env e preen
 ```bash
 USER_AGENT="adicione o user-agent do google aqui"
 SCRAPERAPI_KEY="adicione a chave do scraperapi aqui"
+SUPABASE_URL="adicione a url do supabase aqui"
+SUPABASE_KEY="adicione a chave do supabase aqui"
 ```
 - Para obter o seu user agent, basta pesquisar no google "my user agent" e copiar o valor que aparecer completo e adicionar no arquivo .env.
 - Para obter a chave do ScraperAPI, acesse o site https://www.scraperapi.com/ e crie uma conta gratuita. Após a criação da conta, você copia a chave e adiciona no arquivo .env.
+- Para obter a url e a chave do supabase, acesse o site https://supabase.io/ e crie uma conta gratuita. Após a criação da conta, você copia a url e a chave e adiciona no arquivo .env.
+
+4. Configuração do banco de dados:
+- O banco de dados PostgreSQL é hospedado no Supabase, um serviço de banco de dados e autenticação.
+- Crie uma conta gratuita no Supabase e crie um novo projeto.
+- Crie um banco de dados e copie a URL e a chave de acesso.
+- crie um banco de dados e em seguinda execute a query abaixo para criar a tabela products.
+```sql
+CREATE TABLE products (
+    id SERIAL PRIMARY KEY,
+    model TEXT,
+    storage REAL,
+    ram REAL,
+    is_5g INTEGER,
+    price_whole REAL,
+    rating_value REAL,
+    origin TEXT
+);
+```
 
 ## Execução do Pipeline e Visualização Interativa
 
-1. Coleta de dados:
+Para executar o pipeline completo e visualizar os dados processados e ativar a API, execute o seguinte comando:
 ```bash
 cd src
-python run_spiders.py
-```
-2. Processamento dos dados:
-```bash
-cd src/processamento
 python main.py
-```
-3. Visualização interativa:
-```bash
-cd src/dashboard
-streamlit run app.py
 ```
 
 ### Detalhes da execução:
+
+#### 0. Execução do pipeline:
+    - O script main.py gerencia o pipeline de coleta, processamento, visualização e API.
+    - O streamlit e o FastAPI são executados em threads separadas para fornecer a interface interativa e a API.
+    - O Ngrok é utilizado para disponibilizar a API e o dashboard para acesso externo.
+
 #### 1. Coleta de dados:
     - Quando executado o script run_spiders.py, os spiders de Amazon, Mercado Livre e Magazine Luiza são acionados para coletar dados de smartphones automaticamente.
     - Os dados brutos são armazenados em arquivos JSON na pasta raw_data/
     - Caso ocorra algum erro durante a execução, verifique as mensagens de log no terminal, possa ser que algum elemento da página tenha sido alterado ou o site esteja bloqueando o acesso.
 
 #### 2. Processamento dos dados:
-    - Quando executado o script main.py, ele gerencia o processamento de cada um respectivo arquivo JSON e armazena os dados processados em um banco de dados SQLite na pasta processed_data/.
+    - Quando executado o script main.py, ele gerencia o processamento de cada um respectivo arquivo JSON e armazena os dados processados no banco de dados PostgreSQL no Supabase.
     - O banco de dados é criado automaticamente e contém tabelas para cada fonte de dados (Amazon, Mercado Livre, Magazine Luiza).
     - Os dados são procesados e limpos para facilitar a análise e visualização.
     - Os valores são tratados para remover caracteres especiais, converter preços para float, e extrair informações adicionais.
@@ -157,12 +138,18 @@ streamlit run app.py
     - Ele exibe gráficos de preços, avaliações, e especificações técnicas de smartphones.
     - A interface é simples e intuitiva, permitindo filtrar e ordenar os dados conforme necessário.
 
+#### 4. API de acesso aos dados:
+    - O FastAPI é utilizado para fornecer uma API REST para acessar os dados processados.
+    - A API permite consultar os dados de smartphones por modelo, preço, avaliação, e outras características.
+    - A API é acessível em http://localhost:8000/docs, onde você pode testar as consultas e ver a documentação interativa.
+
 ## Considerações Finais
 
 #### Limitações 
 - O projeto foi desenvolvido para fins educacionais e pode não ser adequado para uso em produção.
 - O scraping de sites é uma prática legalmente questionável e pode violar os termos de serviço de alguns sites.
 - O limite de requisições do ScraperAPI é de 5000 créditos mensais para a conta gratuita, o que pode limitar a quantidade de dados que podem ser coletados.
+
 
 #### Futuras implementações 
 - Adicionar mais fontes de dados e spiders para coletar informações de outros sites.

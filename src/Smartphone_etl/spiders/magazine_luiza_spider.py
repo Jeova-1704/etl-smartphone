@@ -16,6 +16,7 @@ class MagazineLuizaSpider(scrapy.Spider):
             '../raw_data/magazine_luiza_products.json': {
                 'format': 'json',
                 'encoding': 'utf8',
+                'overwrite': True,
             }
         }
     }
