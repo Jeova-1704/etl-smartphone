@@ -2,7 +2,7 @@
 Este projeto é um pipeline de engenharia de dados desenvolvido para coletar, processar e analisar dados de smartphones disponíveis em e-commerces como Amazon, Mercado Livre, e Magazine Luiza. O pipeline inclui uma etapa de coleta de dados usando Scrapy, processamento e armazenamento em um banco de dados, e visualização interativa com Streamlit.
 
 <!-- Add uma imagem abaixo -->
-![Imagem](.\arquitetura-projeto-etl.png)
+![Pipeline completa do projeto](images/arquitetura-projeto-etl.png)
 
 ## Índice
 1. [Visão Geral](#visão-geral)
