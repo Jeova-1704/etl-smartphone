@@ -116,32 +116,32 @@ python main.py
 ### Detalhes da execução:
 
 #### 0. Execução do pipeline:
-    - O script main.py gerencia o pipeline de coleta, processamento, visualização e API.
-    - O streamlit e o FastAPI são executados em threads separadas para fornecer a interface interativa e a API.
-    - O Ngrok é utilizado para disponibilizar a API e o dashboard para acesso externo.
+- O script main.py gerencia o pipeline de coleta, processamento, visualização e API.
+- O streamlit e o FastAPI são executados em threads separadas para fornecer a interface interativa e a API.
+- O Ngrok é utilizado para disponibilizar a API e o dashboard para acesso externo.
 
 #### 1. Coleta de dados:
-    - Quando executado o script run_spiders.py, os spiders de Amazon, Mercado Livre e Magazine Luiza são acionados para coletar dados de smartphones automaticamente.
-    - Os dados brutos são armazenados em arquivos JSON na pasta raw_data/
-    - Caso ocorra algum erro durante a execução, verifique as mensagens de log no terminal, possa ser que algum elemento da página tenha sido alterado ou o site esteja bloqueando o acesso.
+- Quando executado o script run_spiders.py, os spiders de Amazon, Mercado Livre e Magazine Luiza são acionados para coletar dados de smartphones automaticamente.
+- Os dados brutos são armazenados em arquivos JSON na pasta raw_data/
+- Caso ocorra algum erro durante a execução, verifique as mensagens de log no terminal, possa ser que algum elemento da página tenha sido alterado ou o site esteja bloqueando o acesso.
 
 #### 2. Processamento dos dados:
-    - Quando executado o script main.py, ele gerencia o processamento de cada um respectivo arquivo JSON e armazena os dados processados no banco de dados PostgreSQL no Supabase.
-    - O banco de dados é criado automaticamente e contém tabelas para cada fonte de dados (Amazon, Mercado Livre, Magazine Luiza).
-    - Os dados são procesados e limpos para facilitar a análise e visualização.
-    - Os valores são tratados para remover caracteres especiais, converter preços para float, e extrair informações adicionais.
-    - O meu formated_db.py é responsável unir os dados processados em um único banco de dados e fazer a ultima limpeza dos dados.
-    - Todo o processor é gerenciado pelo main.py.
+- Quando executado o script main.py, ele gerencia o processamento de cada um respectivo arquivo JSON e armazena os dados processados no banco de dados PostgreSQL no Supabase.
+- O banco de dados é criado automaticamente e contém tabelas para cada fonte de dados (Amazon, Mercado Livre, Magazine Luiza).
+- Os dados são procesados e limpos para facilitar a análise e visualização.
+- Os valores são tratados para remover caracteres especiais, converter preços para float, e extrair informações adicionais.
+- O meu formated_db.py é responsável unir os dados processados em um único banco de dados e fazer a ultima limpeza dos dados.
+- Todo o processor é gerenciado pelo main.py.
 
 #### 3. Visualização interativa:
-    - O dashboard é uma aplicação Streamlit que permite visualizar os dados processados de forma interativa.
-    - Ele exibe gráficos de preços, avaliações, e especificações técnicas de smartphones.
-    - A interface é simples e intuitiva, permitindo filtrar e ordenar os dados conforme necessário.
+- O dashboard é uma aplicação Streamlit que permite visualizar os dados processados de forma interativa.
+- Ele exibe gráficos de preços, avaliações, e especificações técnicas de smartphones.
+- A interface é simples e intuitiva, permitindo filtrar e ordenar os dados conforme necessário.
 
 #### 4. API de acesso aos dados:
-    - O FastAPI é utilizado para fornecer uma API REST para acessar os dados processados.
-    - A API permite consultar os dados de smartphones por modelo, preço, avaliação, e outras características.
-    - A API é acessível em http://localhost:8000/docs, onde você pode testar as consultas e ver a documentação interativa.
+- O FastAPI é utilizado para fornecer uma API REST para acessar os dados processados.
+- A API permite consultar os dados de smartphones por modelo, preço, avaliação, e outras características.
+- A API é acessível em http://localhost:8000/docs, onde você pode testar as consultas e ver a documentação interativa.
 
 ## Considerações Finais
 
